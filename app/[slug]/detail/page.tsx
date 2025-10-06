@@ -175,14 +175,6 @@ export default async function DetailPage({ params }: DetailPageProps) {
                       day.astro.sunset,
                     )
 
-                    // Determine cloud cover quality for astrophotography
-                    const cloudQuality =
-                      hour.cloud < 30
-                        ? 'excellent'
-                        : hour.cloud < 60
-                          ? 'moderate'
-                          : 'poor'
-
                     return (
                       <div
                         key={hour.time}
