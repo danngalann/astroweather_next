@@ -11,7 +11,7 @@ interface DetailPageProps {
 }
 
 export default async function DetailPage({ params }: DetailPageProps) {
-  const { slug } = params
+  const { slug } = await params
 
   const res = await fetch(`${API_URL}/weather/${slug}`, {
     next: { revalidate: 300 },
@@ -79,9 +79,16 @@ export default async function DetailPage({ params }: DetailPageProps) {
 
         <div className="space-y-8">
           {forecast.forecastday.map((day) => {
-            const avgCloudCover = Math.round(
-              day.hour.reduce((sum, h) => sum + h.cloud, 0) / day.hour.length,
+            const nightHours = day.hour.filter(
+              (h) => !isDaytime(h.time, day.astro.sunrise, day.astro.sunset),
             )
+            const avgCloudCover =
+              nightHours.length > 0
+                ? Math.round(
+                    nightHours.reduce((sum, h) => sum + h.cloud, 0) /
+                      nightHours.length,
+                  )
+                : 0
             const moonIllumination = day.astro.moon_illumination
 
             return (
@@ -127,7 +134,10 @@ export default async function DetailPage({ params }: DetailPageProps) {
                       }`}
                     >
                       <div className="mb-1 text-xs font-medium tracking-wide text-zinc-400 uppercase">
-                        Avg Cloud Cover
+                        Avg Cloud Cover{' '}
+                        <span className="text-[10px] text-zinc-500 lowercase">
+                          (while the sun is down)
+                        </span>
                       </div>
                       <div className="flex items-baseline gap-2">
                         <span className="text-3xl font-bold text-zinc-100">
