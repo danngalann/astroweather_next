@@ -64,36 +64,58 @@ export default async function Home() {
               <span className="font-semibold text-zinc-200">Forecast:</span>
             </div>
             <div className="space-y-2">
-              {forecast.forecastday.map((day) => (
-                <div
-                  key={day.date}
-                  className="flex items-center gap-3 rounded bg-zinc-700 p-2"
-                >
-                  <Image
-                    src={
-                      day.day.condition.icon.startsWith('//')
-                        ? `http:${day.day.condition.icon}`
-                        : day.day.condition.icon
-                    }
-                    alt={day.day.condition.text}
-                    width={48}
-                    height={48}
-                    className="h-8 w-8"
-                  />
-                  <div>
-                    <div className="text-sm font-medium text-zinc-100">
-                      {new Date(day.date).toLocaleDateString('es-ES')}
-                    </div>
-                    <div className="text-xs text-zinc-300">
-                      {day.day.condition.text}
-                    </div>
-                    <div className="text-xs text-zinc-400">
-                      {day.day.mintemp_c}°C - {day.day.maxtemp_c}°C | Humidity:{' '}
-                      {day.day.avghumidity}%
+              {forecast.forecastday.map((day) => {
+                const firstHour = day.hour[0]
+                const lastHour = day.hour[day.hour.length - 1]
+                const firstHourTime = new Date(
+                  firstHour.time,
+                ).toLocaleTimeString('es-ES', {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })
+                const lastHourTime = new Date(lastHour.time).toLocaleTimeString(
+                  'es-ES',
+                  {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  },
+                )
+
+                return (
+                  <div
+                    key={day.date}
+                    className="flex items-center gap-3 rounded bg-zinc-700 p-2"
+                  >
+                    <Image
+                      src={
+                        day.day.condition.icon.startsWith('//')
+                          ? `http:${day.day.condition.icon}`
+                          : day.day.condition.icon
+                      }
+                      alt={day.day.condition.text}
+                      width={48}
+                      height={48}
+                      className="h-8 w-8"
+                    />
+                    <div>
+                      <div className="text-sm font-medium text-zinc-100">
+                        {new Date(day.date).toLocaleDateString('es-ES')}
+                      </div>
+                      <div className="text-xs text-zinc-300">
+                        {day.day.condition.text}
+                      </div>
+                      <div className="text-xs text-zinc-400">
+                        {day.day.mintemp_c}°C - {day.day.maxtemp_c}°C |{' '}
+                        Humidity: {day.day.avghumidity}%
+                      </div>
+                      <div className="text-xs text-zinc-500">
+                        Hours: {firstHourTime} - {lastHourTime} (
+                        {day.hour.length}h)
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         ))}
