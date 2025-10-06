@@ -1,5 +1,6 @@
 import { API_URL } from '@/app/lib/constants'
 import { WeatherData } from '@/app/lib/definitions'
+import { formatWeatherIconUrl, getLocationQualityStyles } from '@/app/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -23,7 +24,7 @@ export default async function Home() {
         {data.map(({ location, current, forecast }) => (
           <div
             key={location.slug}
-            className={`relative w-full max-w-md rounded-xl border-2 bg-zinc-800 p-6 shadow-lg transition-all ${location.isGoodPlaceTonight ? 'border-green-400 ring-2 ring-green-700' : 'border-zinc-700'}`}
+            className={`relative w-full max-w-md rounded-xl border-2 bg-zinc-800 p-6 shadow-lg transition-all ${getLocationQualityStyles(location.isGoodPlaceTonight)}`}
           >
             {location.isGoodPlaceTonight && (
               <span className="absolute top-4 right-4 rounded bg-green-700 px-2 py-1 text-xs font-bold text-zinc-100 shadow">
@@ -41,11 +42,7 @@ export default async function Home() {
             </div>
             <div className="mb-4 flex items-center gap-4">
               <Image
-                src={
-                  current.condition.icon.startsWith('//')
-                    ? `http:${current.condition.icon}`
-                    : current.condition.icon
-                }
+                src={formatWeatherIconUrl(current.condition.icon)}
                 width={48}
                 height={48}
                 alt={current.condition.text}
@@ -72,11 +69,7 @@ export default async function Home() {
                     className="flex items-center gap-3 rounded bg-zinc-700 p-2"
                   >
                     <Image
-                      src={
-                        day.day.condition.icon.startsWith('//')
-                          ? `http:${day.day.condition.icon}`
-                          : day.day.condition.icon
-                      }
+                      src={formatWeatherIconUrl(day.day.condition.icon)}
                       alt={day.day.condition.text}
                       width={48}
                       height={48}

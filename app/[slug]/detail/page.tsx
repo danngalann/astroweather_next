@@ -1,6 +1,15 @@
 import { API_URL } from '@/app/lib/constants'
 import { WeatherData } from '@/app/lib/definitions'
-import { isDaytime } from '@/app/lib/utils'
+import {
+  isDaytime,
+  formatWeatherIconUrl,
+  getLocationQualityStyles,
+  getCloudCoverQuality,
+  getCloudCoverStyles,
+  getMoonIlluminationStyles,
+  getHourlyCloudStyles,
+  getDayNightStyles,
+} from '@/app/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -35,7 +44,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
         </Link>
 
         <div
-          className={`mb-8 rounded-xl border-2 bg-zinc-800 p-6 shadow-lg ${location.isGoodPlaceTonight ? 'border-green-400 ring-2 ring-green-700' : 'border-zinc-700'}`}
+          className={`mb-8 rounded-xl border-2 bg-zinc-800 p-6 shadow-lg ${getLocationQualityStyles(location.isGoodPlaceTonight)}`}
         >
           {location.isGoodPlaceTonight && (
             <span className="absolute top-4 right-4 rounded bg-green-700 px-2 py-1 text-xs font-bold text-zinc-100 shadow">
@@ -54,11 +63,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
 
           <div className="flex items-center gap-4">
             <Image
-              src={
-                current.condition.icon.startsWith('//')
-                  ? `http:${current.condition.icon}`
-                  : current.condition.icon
-              }
+              src={formatWeatherIconUrl(current.condition.icon)}
               width={64}
               height={64}
               alt={current.condition.text}
@@ -125,13 +130,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
                   {/* Astrophotography Key Metrics */}
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                     <div
-                      className={`rounded-lg border-2 p-3 ${
-                        avgCloudCover < 30
-                          ? 'border-green-500 bg-green-500/10'
-                          : avgCloudCover < 60
-                            ? 'border-yellow-500 bg-yellow-500/10'
-                            : 'border-red-500 bg-red-500/10'
-                      }`}
+                      className={`rounded-lg border-2 p-3 ${getCloudCoverStyles(avgCloudCover)}`}
                     >
                       <div className="mb-1 text-xs font-medium tracking-wide text-zinc-400 uppercase">
                         Avg Cloud Cover{' '}
@@ -144,23 +143,14 @@ export default async function DetailPage({ params }: DetailPageProps) {
                           {avgCloudCover}%
                         </span>
                         <span className="text-sm text-zinc-400">
-                          {avgCloudCover < 30
-                            ? '✨ Excellent'
-                            : avgCloudCover < 60
-                              ? '⚠️ Moderate'
-                              : '❌ Poor'}
+                          {getCloudCoverQuality(avgCloudCover).emoji}{' '}
+                          {getCloudCoverQuality(avgCloudCover).label}
                         </span>
                       </div>
                     </div>
 
                     <div
-                      className={`rounded-lg border-2 p-3 ${
-                        moonIllumination < 25
-                          ? 'border-green-500 bg-green-500/10'
-                          : moonIllumination < 50
-                            ? 'border-yellow-500 bg-yellow-500/10'
-                            : 'border-orange-500 bg-orange-500/10'
-                      }`}
+                      className={`rounded-lg border-2 p-3 ${getMoonIlluminationStyles(moonIllumination)}`}
                     >
                       <div className="mb-1 text-xs font-medium tracking-wide text-zinc-400 uppercase">
                         Moon Illumination
@@ -188,11 +178,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
                     return (
                       <div
                         key={hour.time}
-                        className={`rounded-lg border-2 p-3 transition-colors ${
-                          isDay
-                            ? 'border-yellow-600/50 bg-yellow-900/20'
-                            : 'border-zinc-700 bg-zinc-900/50'
-                        }`}
+                        className={`rounded-lg border-2 p-3 transition-colors ${getDayNightStyles(isDay)}`}
                       >
                         <div className="mb-2 text-center text-sm font-medium text-zinc-300">
                           {new Date(hour.time).toLocaleTimeString('es-ES', {
@@ -203,13 +189,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
 
                         {/* Cloud Cover - Most Important */}
                         <div
-                          className={`mb-2 rounded p-2 text-center ${
-                            hour.cloud < 30
-                              ? 'bg-green-500/20'
-                              : hour.cloud < 60
-                                ? 'bg-yellow-500/20'
-                                : 'bg-red-500/20'
-                          }`}
+                          className={`mb-2 rounded p-2 text-center ${getHourlyCloudStyles(hour.cloud)}`}
                         >
                           <div className="text-xs text-zinc-400">Cloud</div>
                           <div className="text-2xl font-bold text-zinc-100">
@@ -219,11 +199,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
 
                         <div className="mb-2 flex justify-center">
                           <Image
-                            src={
-                              hour.condition.icon.startsWith('//')
-                                ? `http:${hour.condition.icon}`
-                                : hour.condition.icon
-                            }
+                            src={formatWeatherIconUrl(hour.condition.icon)}
                             alt={hour.condition.text}
                             width={40}
                             height={40}
