@@ -66,22 +66,6 @@ export default async function Home() {
             </div>
             <div className="space-y-2">
               {forecast.forecastday.map((day) => {
-                const firstHour = day.hour[0]
-                const lastHour = day.hour[day.hour.length - 1]
-                const firstHourTime = new Date(
-                  firstHour.time,
-                ).toLocaleTimeString('es-ES', {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })
-                const lastHourTime = new Date(lastHour.time).toLocaleTimeString(
-                  'es-ES',
-                  {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  },
-                )
-
                 return (
                   <div
                     key={day.date}
@@ -108,10 +92,6 @@ export default async function Home() {
                       <div className="text-xs text-zinc-400">
                         {day.day.mintemp_c}°C - {day.day.maxtemp_c}°C |{' '}
                         Humidity: {day.day.avghumidity}%
-                      </div>
-                      <div className="text-xs text-zinc-500">
-                        Hours: {firstHourTime} - {lastHourTime} (
-                        {day.hour.length}h)
                       </div>
                     </div>
                   </div>
