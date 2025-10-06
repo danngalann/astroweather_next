@@ -39,8 +39,14 @@ export default async function Home() {
               <p className="text-xs text-zinc-500">Bortle: {location.bortle}</p>
             </div>
             <div className="mb-4 flex items-center gap-4">
-              <img
-                src={current.condition.icon}
+              <Image
+                src={
+                  current.condition.icon.startsWith('//')
+                    ? `http:${current.condition.icon}`
+                    : current.condition.icon
+                }
+                width={48}
+                height={48}
                 alt={current.condition.text}
                 className="h-12 w-12"
               />
