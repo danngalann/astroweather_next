@@ -26,14 +26,5 @@ export function isDaytime(
   const sunriseMinutes = parse12HourTime(sunrise)
   const sunsetMinutes = parse12HourTime(sunset)
 
-  console.table({
-    hourTime,
-    hourMinutes,
-    sunrise,
-    sunriseMinutes,
-    sunset,
-    sunsetMinutes,
-  })
-
   return hourMinutes >= sunriseMinutes && hourMinutes <= sunsetMinutes
 }
