@@ -35,10 +35,10 @@ export default async function DetailPage({ params }: DetailPageProps) {
         </Link>
 
         <div
-          className={`mb-8 rounded-xl border-2 bg-zinc-800 p-6 shadow-lg ${location.isGoodPlaceTonight ? 'border-blue-400 ring-2 ring-blue-700' : 'border-zinc-700'}`}
+          className={`mb-8 rounded-xl border-2 bg-zinc-800 p-6 shadow-lg ${location.isGoodPlaceTonight ? 'border-green-400 ring-2 ring-green-700' : 'border-zinc-700'}`}
         >
           {location.isGoodPlaceTonight && (
-            <span className="absolute top-4 right-4 rounded bg-blue-700 px-2 py-1 text-xs font-bold text-zinc-100 shadow">
+            <span className="absolute top-4 right-4 rounded bg-green-700 px-2 py-1 text-xs font-bold text-zinc-100 shadow">
               Good Place Tonight
             </span>
           )}

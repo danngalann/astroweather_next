@@ -23,10 +23,10 @@ export default async function Home() {
         {data.map(({ location, current, forecast }) => (
           <div
             key={location.slug}
-            className={`relative w-full max-w-md rounded-xl border-2 bg-zinc-800 p-6 shadow-lg transition-all ${location.isGoodPlaceTonight ? 'border-blue-400 ring-2 ring-blue-700' : 'border-zinc-700'}`}
+            className={`relative w-full max-w-md rounded-xl border-2 bg-zinc-800 p-6 shadow-lg transition-all ${location.isGoodPlaceTonight ? 'border-green-400 ring-2 ring-green-700' : 'border-zinc-700'}`}
           >
             {location.isGoodPlaceTonight && (
-              <span className="absolute top-4 right-4 rounded bg-blue-700 px-2 py-1 text-xs font-bold text-zinc-100 shadow">
+              <span className="absolute top-4 right-4 rounded bg-green-700 px-2 py-1 text-xs font-bold text-zinc-100 shadow">
                 Good Place Tonight
               </span>
             )}
