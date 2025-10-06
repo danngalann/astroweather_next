@@ -19,7 +19,7 @@ export default async function Home() {
       <h1 className="mb-8 text-center text-3xl font-bold text-zinc-100">
         AstroWeather
       </h1>
-      <div className="flex flex-wrap justify-center gap-6">
+      <div className="flex flex-wrap justify-center gap-6 px-4">
         {data.map(({ location, current, forecast }) => (
           <div
             key={location.slug}

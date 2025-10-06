@@ -97,9 +97,9 @@ export default async function DetailPage({ params }: DetailPageProps) {
                 className="rounded-xl bg-zinc-800 p-6 shadow-lg"
               >
                 <div className="mb-4 border-b border-zinc-700 pb-4">
-                  <div className="mb-3 flex items-start justify-between">
+                  <div className="mb-3 flex flex-col items-start justify-between sm:flex-row">
                     <div>
-                      <h2 className="text-xl font-semibold text-zinc-100">
+                      <h2 className="text-xl font-semibold text-zinc-100 capitalize">
                         {new Date(day.date).toLocaleDateString('es-ES', {
                           weekday: 'long',
                           year: 'numeric',
@@ -123,7 +123,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
                   </div>
 
                   {/* Astrophotography Key Metrics */}
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                     <div
                       className={`rounded-lg border-2 p-3 ${
                         avgCloudCover < 30
@@ -194,7 +194,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
                             : 'border-zinc-700 bg-zinc-900/50'
                         }`}
                       >
-                        <div className="mb-2 text-center text-xs font-medium text-zinc-300">
+                        <div className="mb-2 text-center text-sm font-medium text-zinc-300">
                           {new Date(hour.time).toLocaleTimeString('es-ES', {
                             hour: '2-digit',
                             minute: '2-digit',
