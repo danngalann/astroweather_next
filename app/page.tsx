@@ -1,6 +1,7 @@
 import { API_URL } from '@/app/lib/constants'
 import { WeatherData } from '@/app/lib/definitions'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default async function Home() {
   const res = await fetch(`${API_URL}/weather`, {
@@ -117,6 +118,12 @@ export default async function Home() {
                 )
               })}
             </div>
+            <Link
+              href={`/${location.slug}/detail`}
+              className="mt-4 block rounded bg-blue-600 py-2 text-center text-sm font-medium text-zinc-100 transition-colors hover:bg-blue-700"
+            >
+              View Hourly Forecast
+            </Link>
           </div>
         ))}
       </div>
