@@ -7,7 +7,7 @@ services:
     image: astroweather_frontend
     container_name: astroweather_frontend
     ports:
-      - "3000:3000"
+      - "3020:3000"
     environment:
       - API_URL=http://astroweather_backend:8000
     restart: unless-stopped
