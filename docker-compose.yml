@@ -1,14 +1,16 @@
 services:
   astroweather_frontend:
-    build:
-      context: .
-      args:
-        - API_URL=http://localhost:6723
+    build: .
     image: astroweather_frontend
     container_name: astroweather_frontend
     ports:
-      - "3020:3000"
+      - "3000:3000"
     environment:
-      - API_URL=http://localhost:6723
-    network_mode: host
+      - API_URL=http://astroweather_backend:8000
     restart: unless-stopped
+    networks:
+      - astroweather_network
+
+networks:
+  astroweather_network:
+    external: true

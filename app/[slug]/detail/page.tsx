@@ -13,6 +13,10 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 
+// Dynamic rendering with 5 minute cache
+export const dynamic = 'force-dynamic'
+export const revalidate = 300
+
 interface DetailPageProps {
   params: {
     slug: string

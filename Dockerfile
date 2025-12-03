@@ -14,7 +14,7 @@ COPY package.json pnpm-lock.yaml ./
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
-# Build stage
+# Build stage - skip prerendering with dynamic routes
 FROM base AS builder
 WORKDIR /app
 
@@ -22,9 +22,8 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Set environment variable for build
-ARG API_URL
-ENV API_URL=$API_URL
+# Set a dummy API_URL for build (won't be used due to dynamic rendering)
+ENV API_URL=http://localhost:8000
 
 # Build the application
 RUN pnpm build

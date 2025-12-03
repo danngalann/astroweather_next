@@ -4,6 +4,10 @@ import { formatWeatherIconUrl, getLocationQualityStyles } from '@/app/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 
+// Dynamic rendering with 5 minute cache
+export const dynamic = 'force-dynamic'
+export const revalidate = 300
+
 export default async function Home() {
   const res = await fetch(`${API_URL}/weather`, {
     next: { revalidate: 300 },
