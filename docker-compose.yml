@@ -1,0 +1,19 @@
+services:
+  astroweather_frontend:
+    build:
+      context: .
+      args:
+        - API_URL=http://astroweather_backend:8000
+    image: astroweather_frontend
+    container_name: astroweather_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - API_URL=http://astroweather_backend:8000
+    restart: unless-stopped
+    networks:
+      - astroweather_network
+
+networks:
+  astroweather_network:
+    external: true
