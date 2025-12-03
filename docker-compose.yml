@@ -10,7 +10,11 @@ services:
     restart: unless-stopped
     networks:
       - astroweather_network
+      - proxy
 
 networks:
   astroweather_network:
     external: true
+  proxy:
+    external: false
+    name: proxy
