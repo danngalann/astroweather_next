@@ -10,7 +10,7 @@ export const revalidate = 300
 
 export default async function Home() {
   const res = await fetch(`${API_URL}/weather`, {
-    next: { revalidate: 300 },
+    cache: 'no-store',
   })
 
   if (!res.ok) {

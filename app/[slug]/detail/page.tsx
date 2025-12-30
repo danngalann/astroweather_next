@@ -27,7 +27,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
   const { slug } = await params
 
   const res = await fetch(`${API_URL}/weather/${slug}`, {
-    next: { revalidate: 300 },
+    cache: 'no-store',
   })
 
   if (!res.ok) {
