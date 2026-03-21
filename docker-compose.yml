@@ -16,5 +16,5 @@ networks:
   astroweather_network:
     external: true
   proxy:
-    external: false
+    external: true
     name: proxy
