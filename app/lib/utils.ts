@@ -1,3 +1,5 @@
+import { WeatherData } from '@/app/lib/definitions'
+
 // Helper function to check if a time is between sunrise and sunset
 export function isDaytime(
   hourTime: string,
@@ -93,4 +95,36 @@ export function getDayNightStyles(isDay: boolean): string {
   return isDay
     ? 'border-yellow-600/50 bg-yellow-900/20'
     : 'border-zinc-700 bg-zinc-900/50'
+}
+
+// Below this many Meteosat-sourced forecast hours the scraped data is
+// considered stale or incomplete (fresh data covers ~48+ upcoming hours).
+const MIN_HEALTHY_METEOSAT_HOURS = 24
+
+export interface MeteosatCoverage {
+  slug: string
+  name: string
+  meteosatHours: number
+  totalHours: number
+  status: 'ok' | 'partial' | 'missing'
+}
+
+// The backend silently falls back to WeatherAPI when the Meteosat cache is
+// stale or the scraper breaks, so detect that from the hourly data_origin.
+export function getMeteosatCoverage(data: WeatherData): MeteosatCoverage {
+  const hours = data.forecast.forecastday.flatMap((day) => day.hour)
+  const meteosatHours = hours.filter((h) => h.data_origin === 'meteosat').length
+  const status =
+    meteosatHours === 0
+      ? 'missing'
+      : meteosatHours < MIN_HEALTHY_METEOSAT_HOURS
+        ? 'partial'
+        : 'ok'
+  return {
+    slug: data.location.slug,
+    name: data.location.name,
+    meteosatHours,
+    totalHours: hours.length,
+    status,
+  }
 }

@@ -1,3 +1,4 @@
+import DataSourceAlert from '@/app/components/DataSourceAlert'
 import { API_URL } from '@/app/lib/constants'
 import { WeatherData } from '@/app/lib/definitions'
 import {
@@ -46,6 +47,8 @@ export default async function DetailPage({ params }: DetailPageProps) {
         >
           ← Back to overview
         </Link>
+
+        <DataSourceAlert data={[data]} />
 
         <div
           className={`mb-8 rounded-xl border-2 bg-zinc-800 p-6 shadow-lg ${getLocationQualityStyles(location.isGoodPlaceTonight)}`}

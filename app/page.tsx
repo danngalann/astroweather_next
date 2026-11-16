@@ -1,3 +1,4 @@
+import DataSourceAlert from '@/app/components/DataSourceAlert'
 import { API_URL } from '@/app/lib/constants'
 import { WeatherData } from '@/app/lib/definitions'
 import { formatWeatherIconUrl, getLocationQualityStyles } from '@/app/lib/utils'
@@ -24,6 +25,9 @@ export default async function Home() {
       <h1 className="mb-8 text-center text-3xl font-bold text-zinc-100">
         AstroWeather
       </h1>
+      <div className="px-4">
+        <DataSourceAlert data={data} />
+      </div>
       <div className="flex flex-wrap justify-center gap-6 px-4">
         {data.map(({ location, current, forecast }) => (
           <div
