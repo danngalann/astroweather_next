@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'AstroWeather',
-  description: 'Check if your location is good for stargazing tonight with AstroWeather.',
+  description:
+    'Check if your location is good for stargazing tonight with AstroWeather.',
 }
 
 export default function RootLayout({
